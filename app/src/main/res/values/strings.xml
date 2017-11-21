@@ -1,5 +1,29 @@
 <resources>
-    <string name="app_name">ITQ</string>
+    <string name="app_name">ITCQ</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Menu-->
+    <string name="description">IT and Computer quiz</string>
+    <string name="share_app">Sharing</string>
+    <string name="share_via">Share via</string>
+    <string name="play_store">Download the app from the Play Store!</string>
+    <string name="play_store_link">https://play.google.com/store/apps</string>
+
+    <!--Fragment home-->
+    <string name="welcome">Welcome in ITCQ \n IT and Computer quiz</string>
+    <string name="home">Home</string>
+    <string name="quiz">Quiz</string>
+    <string name="category">Category</string>
+    <string name="graphs">Graphs</string>
+    <string name="share">Share</string>
+    <string name="back_button">Press again to exit</string>
+
+    <!--Fragment quiz-->
+    <string name="verify">Verify</string>
+    <string name="next">Next</string>
+
+    <!--Ads-->
+    <string name="ad_unit_id1">11111111111</string>
+    <string name="ad_unit_id2">11111111111</string>
 </resources>

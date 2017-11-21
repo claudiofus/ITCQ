@@ -8,7 +8,7 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".HomeFragment">
+                tools:context=".fragments.HomeFragment">
 
     <View
         android:id="@+id/separator"
@@ -20,18 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/separator"
-        android:text="Benvenuto"/>
+        android:layout_marginEnd="@dimen/text_padding"
+        android:layout_marginStart="@dimen/text_padding"
+        android:layout_marginTop="@dimen/button_margin12"
+        android:background="@drawable/border_radius"
+        android:gravity="center"
+        android:text="@string/welcome"
+        android:textSize="30sp"/>
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/adView"
         android:layout_below="@id/separator"
+        android:layout_margin="@dimen/text_padding"
+        android:background="@drawable/border_radius"
         android:configChanges="orientation|screenSize"
-        android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="30dp"/>
+        android:verticalSpacing="25dp"/>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -40,5 +48,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="1111111111"/>
+        ads:adUnitId="@string/ad_unit_id1"/>
 </RelativeLayout>

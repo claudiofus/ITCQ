@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/questionView"
@@ -15,43 +15,35 @@
         android:layout_marginStart="@dimen/button_margin4"
         android:background="@drawable/border_radius"
         android:gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <ToggleButton
         android:id="@+id/answer1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/QuizToggleButton"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/questionView"
-        android:layout_marginBottom="@dimen/button_margin4"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/button_margin4"
-        android:background="@drawable/border"
-        android:textAllCaps="false"/>
+        android:layout_below="@+id/questionView" />
 
     <ToggleButton
         android:id="@+id/answer2"
         style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer1"/>
+        android:layout_below="@+id/answer1" />
 
     <ToggleButton
         android:id="@+id/answer3"
         style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer2"/>
+        android:layout_below="@+id/answer2" />
 
     <ToggleButton
         android:id="@+id/answer4"
         style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer3"/>
+        android:layout_below="@+id/answer3" />
 
     <TextView
         android:id="@+id/explanationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/answer1"
-        android:layout_alignStart="@+id/answer1"
-        android:layout_below="@+id/answer4"/>
+        android:layout_marginTop="@dimen/button_margin4"
+        android:layout_below="@+id/answer4" />
 
     <Button
         android:id="@+id/verifyButton"
@@ -59,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_alignStart="@+id/explanationView"
-        android:text="@string/verify"/>
+        android:text="@string/verify" />
 
     <Button
         android:id="@+id/nextButton"
@@ -68,7 +60,7 @@
         android:layout_above="@+id/adView"
         android:layout_alignBottom="@+id/verifyButton"
         android:layout_alignEnd="@+id/explanationView"
-        android:text="@string/next"/>
+        android:text="@string/next" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -77,5 +69,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/ad_unit_id2"/>
+        ads:adUnitId="@string/ad_unit_id2" />
 </RelativeLayout>

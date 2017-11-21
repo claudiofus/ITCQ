@@ -21,10 +21,10 @@
     <style name="QuizToggleButton" parent="android:Widget.Button.Toggle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_alignEnd">@+id/answer1</item>
-        <item name="android:layout_alignStart">@+id/answer1</item>
         <item name="android:background">@drawable/border</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:layout_marginBottom">@dimen/button_margin4</item>
+        <item name="android:layout_marginTop">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
     </style>
 </resources>

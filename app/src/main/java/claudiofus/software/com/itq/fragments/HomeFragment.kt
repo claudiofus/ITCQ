@@ -17,10 +17,9 @@ class HomeFragment : Fragment()
                               savedInstanceState : Bundle?) : View?
     {
         val view = inflater?.inflate(R.layout.fragment_home, container, false)
-        val mAdView = view?.findViewById<AdView>(R.id.adView)
         val mGridView = view?.findViewById<GridView>(R.id.gridview)
         mGridView?.adapter = ImageAdapter(this.context)
-
+        val mAdView = view?.findViewById<AdView>(R.id.adView)
 
         //TODO REMOVE COMMENT
         //mAdView?.loadAd(AdRequest.Builder().build())

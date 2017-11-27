@@ -2,6 +2,7 @@ package claudiofus.software.com.itq.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,84 +14,130 @@ import claudiofus.software.com.itq.helper.database
 import claudiofus.software.com.itq.model.Answer
 import claudiofus.software.com.itq.model.Question
 import claudiofus.software.com.itq.utility.Strings.QUESTION_NUM
+import claudiofus.software.com.itq.utility.Utils.animateFromBottom
+import claudiofus.software.com.itq.utility.Utils.animateFromTop
 import org.jetbrains.anko.db.rowParser
 import org.jetbrains.anko.db.select
 import java.util.*
 import kotlin.collections.HashMap
 
-class QuizFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.fragment_quiz, container, false)
-        val mQuestionView = view?.findViewById<TextView>(R.id.questionView)
-        val mAnswerToggle1 = view?.findViewById<ToggleButton>(R.id.answer1)
-        val mAnswerToggle2 = view?.findViewById<ToggleButton>(R.id.answer2)
-        val mAnswerToggle3 = view?.findViewById<ToggleButton>(R.id.answer3)
-        val mAnswerToggle4 = view?.findViewById<ToggleButton>(R.id.answer4)
-        val mVerifyButton = view?.findViewById<Button>(R.id.verifyButton)
-        val mNextButton = view?.findViewById<Button>(R.id.nextButton)
-        val answerArr = arrayOf(mAnswerToggle1, mAnswerToggle2, mAnswerToggle3, mAnswerToggle4)
-        val answerMap = HashMap<Answer, ToggleButton?>()
-        var randomInt = Random().nextInt(QUESTION_NUM).toString()
-        //TODO REMOVE COMMENT
-        //val mAdView = view?.findViewById<AdView>(R.id.adView)
-        //mAdView?.loadAd(AdRequest.Builder().build())
 
-        refreshQuestion(mQuestionView, answerMap, answerArr, randomInt)
+class QuizFragment : Fragment()
+{
+	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
+	                          savedInstanceState : Bundle?) : View?
+	{
+		val view = inflater?.inflate(R.layout.fragment_quiz, container, false)
+		val mQuestionText = view?.findViewById<TextView>(R.id.questionText)
+		val mAnswerToggle1 = view?.findViewById<ToggleButton>(R.id.answer1)
+		val mAnswerToggle2 = view?.findViewById<ToggleButton>(R.id.answer2)
+		val mAnswerToggle3 = view?.findViewById<ToggleButton>(R.id.answer3)
+		val mAnswerToggle4 = view?.findViewById<ToggleButton>(R.id.answer4)
+		val mVerifyButton = view?.findViewById<Button>(R.id.verifyButton)
+		val mNextButton = view?.findViewById<Button>(R.id.nextButton)
+		val mWhyButton = view?.findViewById<Button>(R.id.explanationButton)
+		val mWhyText = view?.findViewById<TextView>(R.id.whyText)
+		val answerArr = arrayOf(mAnswerToggle1, mAnswerToggle2, mAnswerToggle3, mAnswerToggle4)
+		val answerMap = HashMap<Answer, ToggleButton?>()
+		var randomInt = Random().nextInt(QUESTION_NUM).toString()
+		val questionList = arrayListOf<Question>()
+		//TODO REMOVE COMMENT
+		//val mAdView = view?.findViewById<AdView>(R.id.adView)
+		//mAdView?.loadAd(AdRequest.Builder().build())
 
-        for (toggleBtn in answerMap.values) {
-            toggleBtn?.setOnClickListener(View.OnClickListener {
-                clearAnsBackground(answerArr)
-                toggleBtn.setBackgroundColor(resources.getColor(R.color.secondaryLightColor))
-            })
-        }
+		for (toggleBtn in answerArr) animateFromTop(toggleBtn, context)
 
-        mVerifyButton?.setOnClickListener(View.OnClickListener {
-            activity.database.use {
-                val parserVerify = rowParser { id: Int, isCorrect: Long -> Answer(id, isCorrect) }
-                val resultVerify = select(Answer.TABLE_NAME).columns(
-                        Answer.COLUMN_ID,
-                        Answer.COLUMN_IS_CORRECT).whereSimple("question_id = ?",
-                        randomInt).parseList(
-                        parserVerify)
-                println(resultVerify)
-            }
-        })
+		refreshQuestion(questionList, answerMap, answerArr, randomInt)
+		mQuestionText?.text = questionList.first().text
 
-        mNextButton?.setOnClickListener(View.OnClickListener {
-            clearAnsBackground(answerArr)
-            randomInt = Random().nextInt(QUESTION_NUM).toString()
-            refreshQuestion(mQuestionView, answerMap, answerArr, randomInt)
-        })
+		for (toggleBtn in answerMap.values)
+		{
+			toggleBtn?.setOnClickListener(View.OnClickListener {
+				clearAnsBackground(answerArr)
+				toggleBtn.isChecked = true
+				mWhyButton?.visibility = View.INVISIBLE
+				toggleBtn.setBackgroundColor(
+						ContextCompat.getColor(context, R.color.secondaryLightColor))
+			})
+		}
 
-        return view
-    }
+		mVerifyButton?.setOnClickListener(View.OnClickListener {
+			for ((answer, toggleBtn) in answerMap)
+			{
+				if (toggleBtn != null && toggleBtn.isChecked)
+				{
+					if (answer.is_correct == 1)
+					{
+						toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+					}
+					else
+					{
+						toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
+						mWhyButton?.visibility = View.VISIBLE
+					}
+					break
+				}
+			}
+		})
 
-    private fun refreshQuestion(mQuestionView: TextView?, answerMap: HashMap<Answer, ToggleButton?>, answerArr: Array<ToggleButton?>,
-                                randomInt: String) {
-        activity.database.use {
-            val parserQue = rowParser { id: Int, text: String -> Question(id, text) }
-            val parserAns = rowParser { id: Int, text: String -> Answer(id, text) }
-            val resultQue = select(Question.TABLE_NAME).columns(Question.COLUMN_ID,
-                    Question.COLUMN_TEXT).whereSimple(
-                    "_id = ?", randomInt).parseList(parserQue)
-            val resultAns = select(Answer.TABLE_NAME).columns(Answer.COLUMN_ID, Answer.COLUMN_TEXT).whereSimple(
-                    "question_id = ?", resultQue.first().id.toString()).parseList(parserAns)
+		mNextButton?.setOnClickListener(View.OnClickListener {
+			clearAnsBackground(answerArr)
+			randomInt = Random().nextInt(QUESTION_NUM).toString()
+			mWhyButton?.visibility = View.INVISIBLE
+			mWhyText?.visibility = View.INVISIBLE
+			refreshQuestion(questionList, answerMap, answerArr, randomInt)
+		})
 
-            // Show results in view
-            mQuestionView?.text = resultQue.first().text
-            for (i in resultAns.indices) {
-                answerArr[i]?.text = resultAns[i].text
-                answerArr[i]?.textOn = resultAns[i].text
-                answerArr[i]?.textOff = resultAns[i].text
-                answerMap.put(resultAns[i], answerArr[i])
-            }
-        }
-    }
+		mWhyButton?.setOnClickListener(View.OnClickListener {
+			mWhyText?.visibility = View.VISIBLE
+			mWhyText?.text = questionList.first().explanation
+			animateFromBottom(mWhyText, context)
+		})
 
-    private fun clearAnsBackground(answerArr: Array<ToggleButton?>) {
-        for (toggleBtn in answerArr) {
-            toggleBtn?.setBackgroundColor((resources.getColor(R.color.white)))
-        }
-    }
+		return view
+	}
+
+	private fun refreshQuestion(questionList : ArrayList<Question>,
+	                            answerMap : HashMap<Answer, ToggleButton?>,
+	                            answerArr : Array<ToggleButton?>, randomInt : String)
+	{
+		answerMap.clear()
+		questionList.clear()
+		activity.database.use {
+			val parserQue = rowParser { id : Int, text : String, why : String ->
+				Question(id, text, why)
+			}
+			val parserAns = rowParser { id : Int, isCorrect : Int, text : String, questionId : Int ->
+				Answer(id, isCorrect, text, questionId)
+			}
+			questionList.addAll(
+					select(Question.TABLE_NAME).columns(Question.COLUMN_ID, Question.COLUMN_TEXT,
+					                                    Question.COLUMN_EXPLANATION).whereSimple(
+							"_id = ?", randomInt).parseList(parserQue))
+			val resultAns = select(Answer.TABLE_NAME).columns(Answer.COLUMN_ID,
+			                                                  Answer.COLUMN_IS_CORRECT,
+			                                                  Answer.COLUMN_TEXT,
+			                                                  Answer.COLUMN_QUESTION_ID).whereSimple(
+					"question_id = ?", randomInt).parseList(parserAns)
+
+			var i = 0
+			do
+			{
+				answerArr[i]?.text = resultAns[i].text
+				answerArr[i]?.textOn = resultAns[i].text
+				answerArr[i]?.textOff = resultAns[i].text
+				answerMap.put(resultAns[i], answerArr[i])
+				i++
+			} while (i < resultAns.size)
+		}
+	}
+
+	private fun clearAnsBackground(answerArr : Array<ToggleButton?>)
+	{
+		for (toggleBtn in answerArr)
+		{
+			toggleBtn?.isChecked = false
+			toggleBtn?.setBackgroundColor((ContextCompat.getColor(context, R.color.white)))
+		}
+	}
 }

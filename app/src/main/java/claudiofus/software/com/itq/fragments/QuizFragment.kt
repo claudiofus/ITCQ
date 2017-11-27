@@ -16,6 +16,7 @@ import claudiofus.software.com.itq.model.Question
 import claudiofus.software.com.itq.utility.Strings.QUESTION_NUM
 import claudiofus.software.com.itq.utility.Utils.animateFromBottom
 import claudiofus.software.com.itq.utility.Utils.animateFromTop
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.db.rowParser
 import org.jetbrains.anko.db.select
 import java.util.*
@@ -45,7 +46,10 @@ class QuizFragment : Fragment()
 		//val mAdView = view?.findViewById<AdView>(R.id.adView)
 		//mAdView?.loadAd(AdRequest.Builder().build())
 
+		activity.nav_view.menu.findItem(R.id.nav_quiz).isChecked = true
+
 		for (toggleBtn in answerArr) animateFromTop(toggleBtn, context)
+		mWhyButton?.visibility = View.INVISIBLE
 
 		refreshQuestion(questionList, answerMap, answerArr, randomInt)
 		mQuestionText?.text = questionList.first().text
@@ -55,7 +59,6 @@ class QuizFragment : Fragment()
 			toggleBtn?.setOnClickListener(View.OnClickListener {
 				clearAnsBackground(answerArr)
 				toggleBtn.isChecked = true
-				mWhyButton?.visibility = View.INVISIBLE
 				toggleBtn.setBackgroundColor(
 						ContextCompat.getColor(context, R.color.secondaryLightColor))
 			})
@@ -73,7 +76,8 @@ class QuizFragment : Fragment()
 					else
 					{
 						toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
-						mWhyButton?.visibility = View.VISIBLE
+						if (mWhyButton?.visibility == View.VISIBLE || mWhyText?.visibility == View.INVISIBLE)
+							mWhyButton?.visibility = View.VISIBLE
 					}
 					break
 				}
@@ -84,6 +88,7 @@ class QuizFragment : Fragment()
 			clearAnsBackground(answerArr)
 			randomInt = Random().nextInt(QUESTION_NUM).toString()
 			mWhyButton?.visibility = View.INVISIBLE
+			mWhyText?.clearAnimation()
 			mWhyText?.visibility = View.INVISIBLE
 			refreshQuestion(questionList, answerMap, answerArr, randomInt)
 		})
@@ -92,6 +97,7 @@ class QuizFragment : Fragment()
 			mWhyText?.visibility = View.VISIBLE
 			mWhyText?.text = questionList.first().explanation
 			animateFromBottom(mWhyText, context)
+			mWhyButton?.visibility = View.INVISIBLE
 		})
 
 		return view

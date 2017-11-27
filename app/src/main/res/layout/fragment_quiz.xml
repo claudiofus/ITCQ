@@ -66,8 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_toEndOf="@+id/verifyButton"
-        android:text="@string/why"
-        android:visibility="invisible"/>
+        android:text="@string/why"/>
 
     <Button
         android:id="@+id/nextButton"

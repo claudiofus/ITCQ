@@ -5,9 +5,6 @@ data class Question(val id : Int, val text : String, val category : String, val 
                     val created_dt : String, val updated_dt : String)
 {
 
-	constructor(id : Int, text : String, explanation : String) : this(id, text, "", 0, "",
-	                                                                  explanation, 0, "", "")
-
 	companion object
 	{
 		val TABLE_NAME = "quiz_question"

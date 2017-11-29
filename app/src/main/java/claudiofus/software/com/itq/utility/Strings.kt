@@ -7,4 +7,5 @@ object Strings
 	val DB_NAME = "DB_ITQ"
 	val DB_VERSION = 1
 	val QUESTION_NUM = 504
+	val CATEGORY_KEY = "category"
 }

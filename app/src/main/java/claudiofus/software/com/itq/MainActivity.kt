@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.widget.Toast
+import claudiofus.software.com.itq.fragments.CategoryFragment
 import claudiofus.software.com.itq.fragments.HomeFragment
 import claudiofus.software.com.itq.fragments.QuizFragment
+import claudiofus.software.com.itq.fragments.SettingsFragment
 import claudiofus.software.com.itq.utility.Utils
-
+import claudiofus.software.com.itq.utility.Utils.startFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
 {
@@ -43,38 +45,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 		mNavigationView.setNavigationItemSelectedListener(this)
 		mNavigationView.menu.findItem(R.id.nav_home).isChecked = true
-		supportFragmentManager.beginTransaction().replace(R.id.content, HomeFragment()).commit()
+		startFragment(this, HomeFragment())
 	}
 
 	override fun onNavigationItemSelected(item : MenuItem) : Boolean
 	{
 		// Assume fragment is never null
-		val fragment : Fragment
+		var fragment : Fragment
+		fragment = HomeFragment()
 		val id = item.itemId
 		val mDrawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 		val mNavigationView = findViewById<NavigationView>(R.id.nav_view)
 		mNavigationView.setNavigationItemSelectedListener(this)
+		mNavigationView.menu.findItem(R.id.nav_home).isChecked = true
 
-		if (id == R.id.nav_quiz)
+		when (id)
 		{
-			fragment = QuizFragment()
-		}
-		//        else if (id == R.id.nav_category)
-		//            fragment = CategoryFragment()
+			R.id.nav_quiz     -> fragment = QuizFragment()
+			R.id.nav_category -> fragment = CategoryFragment()
 		//        else if (id == R.id.nav_graphs)
 		//            fragment = GraphsFragment()
-		else if (id == R.id.nav_share)
-		{
-			Utils.shareApp(mNavigationView.context)
-			return true
-		}
-		else
-		{
-			fragment = HomeFragment()
-			mNavigationView.menu.findItem(R.id.nav_home).isChecked = true
+			R.id.nav_settings -> fragment = SettingsFragment()
+			R.id.nav_share    ->
+			{
+				Utils.shareApp(mNavigationView.context)
+				return true
+			}
 		}
 
-		supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+		startFragment(this, fragment)
 		mDrawer.closeDrawer(GravityCompat.START)
 		return true
 	}
@@ -92,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 		{
 			Toast.makeText(this, getString(R.string.back_button), Toast.LENGTH_SHORT).show()
 			TO_CLOSE = true
-			Handler().postDelayed(Runnable { TO_CLOSE = false }, 3 * 1000 /* 3 seconds */)
+			Handler().postDelayed({ TO_CLOSE = false }, 3 * 1000 /* 3 seconds */)
 		}
 
 		if (supportFragmentManager.backStackEntryCount == 0)
@@ -100,7 +99,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 			val navigationView = findViewById<NavigationView>(R.id.nav_view)
 			navigationView.setNavigationItemSelectedListener(this)
 			navigationView.menu.findItem(R.id.nav_home).isChecked = true
-			supportFragmentManager.beginTransaction().replace(R.id.content, HomeFragment()).commit()
+			startFragment(this, HomeFragment())
 		}
 		else
 		{

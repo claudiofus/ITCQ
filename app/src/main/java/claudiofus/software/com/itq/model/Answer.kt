@@ -3,13 +3,6 @@ package claudiofus.software.com.itq.model
 data class Answer(val id : Int, val question_id : Int, val text : String, val is_correct : Int,
                   val is_active : Int, val created_dt : String, val updated_dt : String)
 {
-
-	constructor(id : Int, is_correct : Int, text : String, question_id : Int) : this(id,
-	                                                                                 question_id,
-	                                                                                 text,
-	                                                                                 is_correct, 0,
-	                                                                                 "", "")
-
 	companion object
 	{
 		val TABLE_NAME = "quiz_answer"

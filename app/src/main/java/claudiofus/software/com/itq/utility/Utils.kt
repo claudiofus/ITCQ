@@ -2,10 +2,11 @@ package claudiofus.software.com.itq.utility
 
 import android.content.Context
 import android.content.Intent
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.ToggleButton
-
 import claudiofus.software.com.itq.R
 
 object Utils
@@ -40,5 +41,10 @@ object Utils
 		animation.reset()
 		toggleButton?.clearAnimation()
 		toggleButton?.startAnimation(animation)
+	}
+
+	fun startFragment(activity : FragmentActivity, fragment : Fragment)
+	{
+		activity.supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
 	}
 }

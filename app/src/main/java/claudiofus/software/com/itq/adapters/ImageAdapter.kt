@@ -1,4 +1,4 @@
-package claudiofus.software.com.itq.utility
+package claudiofus.software.com.itq.adapters
 
 import android.content.Context
 import android.support.v4.app.Fragment
@@ -10,7 +10,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import claudiofus.software.com.itq.R
+import claudiofus.software.com.itq.fragments.CategoryFragment
 import claudiofus.software.com.itq.fragments.QuizFragment
+import claudiofus.software.com.itq.utility.Utils
 
 
 class ImageAdapter(var mContext : Context) : BaseAdapter()
@@ -85,7 +87,7 @@ class ImageAdapter(var mContext : Context) : BaseAdapter()
 		val fragment : Fragment
 		val activity = mContext as FragmentActivity
 		if (currItem == itemsId.get(0)) fragment = QuizFragment()
-		else if (currItem == itemsId.get(1)) fragment = QuizFragment()
+		else if (currItem == itemsId.get(1)) fragment = CategoryFragment()
 		else if (currItem == itemsId.get(2)) fragment = QuizFragment()
 		else
 		{

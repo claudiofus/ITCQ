@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import claudiofus.software.com.itq.R
-import claudiofus.software.com.itq.utility.ImageAdapter
+import claudiofus.software.com.itq.adapters.ImageAdapter
 import com.google.android.gms.ads.AdView
 
 

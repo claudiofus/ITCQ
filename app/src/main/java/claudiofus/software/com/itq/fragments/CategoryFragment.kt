@@ -22,12 +22,12 @@ class CategoryFragment : Fragment()
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
+		activity.nav_view.menu.findItem(R.id.nav_category).isChecked = true
 		val view = inflater?.inflate(R.layout.fragment_category, container, false)
 		val categoryList = view?.findViewById<ListView>(R.id.categoryList)
 		var categories : List<String> = arrayListOf()
 		val args = Bundle()
 
-		activity.nav_view.menu.findItem(R.id.nav_category).isChecked = true
 		activity.database.use {
 			categories = select(Question.TABLE_NAME).distinct().column(
 					Question.COLUMN_CATEGORY).parseList(classParser())

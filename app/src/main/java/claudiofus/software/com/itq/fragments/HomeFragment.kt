@@ -9,17 +9,22 @@ import android.widget.GridView
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.adapters.ImageAdapter
 import com.google.android.gms.ads.AdView
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class HomeFragment : Fragment()
 {
+	private var mGridView : GridView? = null
+	private var mAdView : AdView? = null
+
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
+		activity.nav_view.menu.findItem(R.id.nav_home).isChecked = true
 		val view = inflater?.inflate(R.layout.fragment_home, container, false)
-		val mGridView = view?.findViewById<GridView>(R.id.gridview)
+		mGridView = view?.findViewById(R.id.gridview)
 		mGridView?.adapter = ImageAdapter(this.context)
-		val mAdView = view?.findViewById<AdView>(R.id.adView)
+		mAdView = view?.findViewById(R.id.adView)
 
 		//TODO REMOVE COMMENT
 		//mAdView?.loadAd(AdRequest.Builder().build())

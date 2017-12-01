@@ -12,11 +12,17 @@ import android.widget.ToggleButton
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.helper.database
 import claudiofus.software.com.itq.model.Answer
+import claudiofus.software.com.itq.model.Answer.Companion.ANSWER_COLUMNS
 import claudiofus.software.com.itq.model.Question
+import claudiofus.software.com.itq.model.Question.Companion.QUESTION_COLUMNS
+import claudiofus.software.com.itq.model.Score
 import claudiofus.software.com.itq.utility.Strings
 import claudiofus.software.com.itq.utility.Strings.QUESTION_NUM
+import claudiofus.software.com.itq.utility.Strings.UNANSWERED_WEIGHT
 import claudiofus.software.com.itq.utility.Utils.animateFromBottom
 import claudiofus.software.com.itq.utility.Utils.animateFromTop
+import claudiofus.software.com.itq.utility.Utils.makeInvisible
+import claudiofus.software.com.itq.utility.Utils.makeVisible
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
@@ -28,32 +34,46 @@ import kotlin.collections.component2
 
 class QuizFragment : Fragment()
 {
+	private var mQuestionText : TextView? = null
+	private var mAnswerToggle1 : ToggleButton? = null
+	private var mAnswerToggle2 : ToggleButton? = null
+	private var mAnswerToggle3 : ToggleButton? = null
+	private var mAnswerToggle4 : ToggleButton? = null
+	private var mVerifyButton : Button? = null
+	private var mNextButton : Button? = null
+	private var mWhyButton : Button? = null
+	private var mWhyText : TextView? = null
+	private var mAverageText : TextView? = null
+	private var scoreUpdated = false
+
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
+		activity.nav_view.menu.findItem(R.id.nav_quiz).isChecked = true
 		val view = inflater?.inflate(R.layout.fragment_quiz, container, false)
-		val mQuestionText = view?.findViewById<TextView>(R.id.questionText)
-		val mAnswerToggle1 = view?.findViewById<ToggleButton>(R.id.answer1)
-		val mAnswerToggle2 = view?.findViewById<ToggleButton>(R.id.answer2)
-		val mAnswerToggle3 = view?.findViewById<ToggleButton>(R.id.answer3)
-		val mAnswerToggle4 = view?.findViewById<ToggleButton>(R.id.answer4)
-		val mVerifyButton = view?.findViewById<Button>(R.id.verifyButton)
-		val mNextButton = view?.findViewById<Button>(R.id.nextButton)
-		val mWhyButton = view?.findViewById<Button>(R.id.explanationButton)
-		val mWhyText = view?.findViewById<TextView>(R.id.whyText)
+		mQuestionText = view?.findViewById(R.id.questionText)
+		mAnswerToggle1 = view?.findViewById(R.id.answer1)
+		mAnswerToggle2 = view?.findViewById(R.id.answer2)
+		mAnswerToggle3 = view?.findViewById(R.id.answer3)
+		mAnswerToggle4 = view?.findViewById(R.id.answer4)
+		mVerifyButton = view?.findViewById(R.id.verifyButton)
+		mNextButton = view?.findViewById(R.id.nextButton)
+		mWhyButton = view?.findViewById(R.id.explanationButton)
+		mWhyText = view?.findViewById(R.id.whyText)
+		mAverageText = view?.findViewById(R.id.averageText)
 		val answerArr = arrayOf(mAnswerToggle1, mAnswerToggle2, mAnswerToggle3, mAnswerToggle4)
 		val answerMap = HashMap<Answer, ToggleButton?>()
 		val questionList = arrayListOf<Question>()
 		val category = if (arguments != null) arguments.getString(Strings.CATEGORY_KEY) else null
+		val score = Score()
+		mAverageText?.text = String.format("%d%%", score.weightedAv)
 
 		//TODO REMOVE COMMENT
 		//		val mAdView = view?.findViewById<AdView>(R.id.adView)
 		//		mAdView?.loadAd(AdRequest.Builder().build())
 
-		activity.nav_view.menu.findItem(R.id.nav_quiz).isChecked = true
-
 		for (toggleBtn in answerArr) animateFromTop(toggleBtn, context)
-		mWhyButton?.visibility = View.INVISIBLE
+		makeInvisible(mWhyButton)
 
 		refreshQuestion(questionList, answerMap, answerArr, category)
 		mQuestionText?.text = questionList.first().text
@@ -69,38 +89,23 @@ class QuizFragment : Fragment()
 		}
 
 		mVerifyButton?.setOnClickListener(View.OnClickListener {
-			for ((answer, toggleBtn) in answerMap)
-			{
-				if (toggleBtn != null && toggleBtn.isChecked)
-				{
-					if (answer.is_correct == 1)
-					{
-						toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
-					}
-					else
-					{
-						toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
-						if (mWhyButton?.visibility == View.VISIBLE || mWhyText?.visibility == View.INVISIBLE) mWhyButton?.visibility = View.VISIBLE
-					}
-					break
-				}
-			}
+			if (isChecked(answerMap)) updateScore(answerMap, score, true)
 		})
 
 		mNextButton?.setOnClickListener(View.OnClickListener {
+			updateScore(answerMap, score, false)
 			clearAnsBackground(answerArr)
-			mWhyButton?.visibility = View.INVISIBLE
+			makeInvisible(mWhyButton, mWhyText)
 			mWhyText?.clearAnimation()
-			mWhyText?.visibility = View.INVISIBLE
 			refreshQuestion(questionList, answerMap, answerArr, category)
 			mQuestionText?.text = questionList.first().text
 		})
 
 		mWhyButton?.setOnClickListener(View.OnClickListener {
-			mWhyText?.visibility = View.VISIBLE
+			makeVisible(mWhyText)
 			mWhyText?.text = questionList.first().explanation
 			animateFromBottom(mWhyText, context)
-			mWhyButton.visibility = View.INVISIBLE
+			makeInvisible(mWhyButton)
 		})
 
 		return view
@@ -114,6 +119,7 @@ class QuizFragment : Fragment()
 		var resultAns = listOf<Answer>()
 		var whereCond = "(_id = ?)"
 		var whereVal = randomInt
+		scoreUpdated = false
 		if (!category.isNullOrEmpty())
 		{
 			whereCond = "(category = ?)"
@@ -124,23 +130,10 @@ class QuizFragment : Fragment()
 		questionList.clear()
 		activity.database.use {
 			questionList.addAll(
-					select(Question.TABLE_NAME).columns(Question.COLUMN_ID, Question.COLUMN_TEXT,
-					                                    Question.COLUMN_CATEGORY,
-					                                    Question.COLUMN_LEVEL_ID,
-					                                    Question.COLUMN_HINT,
-					                                    Question.COLUMN_EXPLANATION,
-					                                    Question.COLUMN_IS_ACTIVE,
-					                                    Question.COLUMN_CREATED_DT,
-					                                    Question.COLUMN_UPDATED_DT).whereSimple(
-							whereCond, whereVal).orderBy("RANDOM()").limit(1).parseList(
-							classParser()))
-			resultAns = select(Answer.TABLE_NAME).columns(Answer.COLUMN_ID,
-			                                              Answer.COLUMN_QUESTION_ID,
-			                                              Answer.COLUMN_TEXT,
-			                                              Answer.COLUMN_IS_CORRECT,
-			                                              Answer.COLUMN_IS_ACTIVE,
-			                                              Answer.COLUMN_CREATED_DT,
-			                                              Answer.COLUMN_UPDATED_DT).whereSimple(
+					select(Question.TABLE_NAME).columns(*QUESTION_COLUMNS).whereSimple(whereCond,
+					                                                                   whereVal).orderBy(
+							"RANDOM()").limit(1).parseList(classParser()))
+			resultAns = select(Answer.TABLE_NAME).columns(*ANSWER_COLUMNS).whereSimple(
 					"question_id = ?", questionList.first().id.toString()).parseList(classParser())
 		}
 
@@ -161,6 +154,47 @@ class QuizFragment : Fragment()
 		{
 			toggleBtn?.isChecked = false
 			toggleBtn?.setBackgroundColor((ContextCompat.getColor(context, R.color.white)))
+		}
+	}
+
+	private fun isCorrectAns(answerMap : HashMap<Answer, ToggleButton?>) : Double
+	{
+		for ((answer, toggleBtn) in answerMap)
+		{
+			if (toggleBtn != null && toggleBtn.isChecked)
+			{
+				if (answer.is_correct == 1)
+				{
+					toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+				}
+				else
+				{
+					toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
+					if (mWhyButton?.visibility == View.VISIBLE || mWhyText?.visibility == View.INVISIBLE)
+					{
+						makeVisible(mWhyButton)
+					}
+				}
+				return answer.is_correct.toDouble()
+			}
+		}
+		return UNANSWERED_WEIGHT
+	}
+
+	private fun isChecked(answerMap : HashMap<Answer, ToggleButton?>) : Boolean
+	{
+		return answerMap.values.any { it != null && it.isChecked }
+	}
+
+	private fun updateScore(answerMap : HashMap<Answer, ToggleButton?>, score : Score,
+	                        validateAnswer : Boolean)
+	{
+		val scorePoint = if (validateAnswer) isCorrectAns(answerMap) else UNANSWERED_WEIGHT
+		if (!scoreUpdated)
+		{
+			score.addScore(scorePoint)
+			mAverageText?.text = String.format("%d%%", score.weightedAv)
+			scoreUpdated = true
 		}
 	}
 }

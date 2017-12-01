@@ -14,14 +14,15 @@
         android:id="@+id/separator"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_centerVertical="true"/>
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/separator"
+        android:layout_above="@id/adView"
         android:layout_marginEnd="@dimen/button_margin16"
         android:layout_marginStart="@dimen/button_margin16"
+        android:layout_toStartOf="@id/separator"
         android:background="@drawable/border_radius"
         android:gravity="center"
         android:text="@string/welcome"
@@ -30,10 +31,10 @@
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/adView"
-        android:layout_below="@id/separator"
-        android:layout_margin="@dimen/button_margin16"
+        android:layout_marginEnd="@dimen/button_margin16"
+        android:layout_toEndOf="@id/separator"
         android:background="@drawable/border_radius"
         android:gravity="center"
         android:numColumns="2"/>

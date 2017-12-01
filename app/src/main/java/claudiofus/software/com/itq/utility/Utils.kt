@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.ToggleButton
 import claudiofus.software.com.itq.R
+import java.util.*
+
 
 object Utils
 {
@@ -46,5 +49,43 @@ object Utils
 	fun startFragment(activity : FragmentActivity, fragment : Fragment)
 	{
 		activity.supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+	}
+
+	fun writePrefs(activity : FragmentActivity, prefs : String, value : Int)
+	{
+		val editor = activity.getPreferences(Context.MODE_PRIVATE).edit()
+		editor.putInt(prefs, value)
+		editor.apply()
+	}
+
+	fun readPrefs(activity : FragmentActivity, prefs : String) : Int
+	{
+		val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+		return sharedPref.getInt(prefs, -1)
+	}
+
+	/**
+	 * Valid only for 1 to 1 relation
+	 */
+	fun <T, E> getKeyByValue(map : Map<T, E>, value : E) : T?
+	{
+		for ((key, value1) in map)
+		{
+			if (Objects.equals(value, value1))
+			{
+				return key
+			}
+		}
+		return null
+	}
+
+	fun makeInvisible(vararg components : TextView?)
+	{
+		for (comp in components) comp?.visibility = View.INVISIBLE
+	}
+
+	fun makeVisible(vararg components : TextView?)
+	{
+		for (comp in components) comp?.visibility = View.VISIBLE
 	}
 }

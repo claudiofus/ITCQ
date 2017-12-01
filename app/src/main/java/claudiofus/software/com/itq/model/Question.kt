@@ -17,5 +17,9 @@ data class Question(val id : Int, val text : String, val category : String, val 
 		val COLUMN_IS_ACTIVE = "is_active"
 		val COLUMN_CREATED_DT = "created_dt"
 		val COLUMN_UPDATED_DT = "updated_dt"
+
+		val QUESTION_COLUMNS = arrayOf(COLUMN_ID, COLUMN_TEXT, COLUMN_CATEGORY, COLUMN_LEVEL_ID,
+		                               COLUMN_HINT, COLUMN_EXPLANATION, COLUMN_IS_ACTIVE,
+		                               COLUMN_CREATED_DT, COLUMN_UPDATED_DT)
 	}
 }

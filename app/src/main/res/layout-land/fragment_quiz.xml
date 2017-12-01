@@ -3,7 +3,13 @@
                 xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal">
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/questionText"
@@ -15,28 +21,50 @@
         android:layout_marginStart="@dimen/button_margin4"
         android:background="@drawable/border_radius"
         android:gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="15sp"/>
 
-    <ToggleButton
-        android:id="@+id/answer1"
-        style="@style/QuizToggleButton"
+    <RelativeLayout
+        android:id="@+id/left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/whyText"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/questionText"/>
+        android:layout_below="@+id/questionText"
+        android:layout_toStartOf="@+id/separator">
 
-    <ToggleButton
-        android:id="@+id/answer2"
-        style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer1"/>
+        <ToggleButton
+            android:id="@+id/answer1"
+            style="@style/QuizToggleButton"
+            android:textSize="12sp"/>
 
-    <ToggleButton
-        android:id="@+id/answer3"
-        style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer2"/>
+        <ToggleButton
+            android:id="@+id/answer3"
+            style="@style/QuizToggleButton"
+            android:layout_below="@+id/answer1"
+            android:textSize="12sp"/>
+    </RelativeLayout>
 
-    <ToggleButton
-        android:id="@+id/answer4"
-        style="@style/QuizToggleButton"
-        android:layout_below="@+id/answer3"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/whyText"
+        android:layout_below="@+id/questionText"
+        android:layout_toEndOf="@+id/separator">
+
+        <ToggleButton
+            android:id="@+id/answer2"
+            style="@style/QuizToggleButton"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"/>
+
+        <ToggleButton
+            android:id="@+id/answer4"
+            style="@style/QuizToggleButton"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/answer2"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/whyText"
@@ -44,7 +72,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/verifyButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/button_margin12"
         android:layout_marginEnd="@dimen/button_margin4"
         android:layout_marginStart="@dimen/button_margin4"
         android:background="@drawable/border_radius"
@@ -57,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
-        android:layout_alignStart="@+id/answer4"
+        android:layout_alignParentStart="true"
         android:text="@string/verify"/>
 
     <Button
@@ -83,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/adView"
         android:layout_alignBottom="@+id/verifyButton"
-        android:layout_alignEnd="@+id/answer4"
+        android:layout_alignParentEnd="true"
         android:text="@string/next"/>
 
     <com.google.android.gms.ads.AdView

@@ -8,4 +8,7 @@ object Strings
 	val DB_VERSION = 1
 	val QUESTION_NUM = 504
 	val CATEGORY_KEY = "category"
+	val PREFS_COLOR = "theme"
+	val SELECTED_COLOR = "selected_color"
+	val UNANSWERED_WEIGHT = 0.5
 }

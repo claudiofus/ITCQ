@@ -15,7 +15,12 @@ import claudiofus.software.com.itq.fragments.CategoryFragment
 import claudiofus.software.com.itq.fragments.HomeFragment
 import claudiofus.software.com.itq.fragments.QuizFragment
 import claudiofus.software.com.itq.fragments.SettingsFragment
+import claudiofus.software.com.itq.utility.Strings.PREFS_COLOR
+import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsMap
+import claudiofus.software.com.itq.utility.ThemeColors.Companion.darkPrimaryMaps
 import claudiofus.software.com.itq.utility.Utils
+import claudiofus.software.com.itq.utility.Utils.getKeyByValue
+import claudiofus.software.com.itq.utility.Utils.readPrefs
 import claudiofus.software.com.itq.utility.Utils.startFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener
@@ -25,15 +30,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 	 */
 	private var TO_CLOSE = false
 
+
 	override fun onCreate(savedInstanceState : Bundle?)
 	{
-		super.onCreate(savedInstanceState)
+		val theme = readPrefs(this, PREFS_COLOR)
+		val currTheme = if (theme == -1) R.style.AppTheme else theme
+		val darkPrimary = darkPrimaryMaps[getKeyByValue(colorsMap, currTheme)]
+		setTheme(currTheme)
 
+		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
 		val toolbar = findViewById<Toolbar>(R.id.toolbar)
 		val mDrawer = findViewById<DrawerLayout>(R.id.drawer_layout)
 		val mNavigationView = findViewById<NavigationView>(R.id.nav_view)
+		mNavigationView.itemIconTintList = resources.getColorStateList(darkPrimary!!)
 		setSupportActionBar(toolbar)
 
 		val toggle = ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open,

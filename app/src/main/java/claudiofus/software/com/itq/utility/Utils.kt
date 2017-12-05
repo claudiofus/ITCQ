@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.ToggleButton
 import claudiofus.software.com.itq.R
+import java.text.DateFormat
 import java.util.*
 
 
@@ -51,14 +52,14 @@ object Utils
 		activity.supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
 	}
 
-	fun writePrefs(activity : FragmentActivity, prefs : String, value : Int)
+	fun writePrefsInt(activity : FragmentActivity, prefs : String, value : Int)
 	{
 		val editor = activity.getPreferences(Context.MODE_PRIVATE).edit()
 		editor.putInt(prefs, value)
 		editor.apply()
 	}
 
-	fun readPrefs(activity : FragmentActivity, prefs : String) : Int
+	fun readPrefsInt(activity : FragmentActivity, prefs : String) : Int
 	{
 		val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
 		return sharedPref.getInt(prefs, -1)
@@ -87,5 +88,27 @@ object Utils
 	fun makeVisible(vararg components : TextView?)
 	{
 		for (comp in components) comp?.visibility = View.VISIBLE
+	}
+
+	fun millisToString(millis : Float) : String
+	{
+		val formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())
+		val calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
+		calendar.timeInMillis = millis.toLong()
+		calendar.add(Calendar.DAY_OF_YEAR, 1)
+		return formatter.format(calendar.time)
+	}
+
+	/**
+	 * Millis of date without time
+	 */
+	fun getDateMillis() : Long
+	{
+		val a = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
+		a.set(Calendar.HOUR_OF_DAY, 0)
+		a.set(Calendar.MINUTE, 0)
+		a.set(Calendar.SECOND, 0)
+		a.set(Calendar.MILLISECOND, 0)
+		return a.timeInMillis
 	}
 }

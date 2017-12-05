@@ -10,23 +10,23 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.ToggleButton
 import claudiofus.software.com.itq.R
-import claudiofus.software.com.itq.helper.database
+import claudiofus.software.com.itq.helper.DbStatement.Companion.insertDateDB
+import claudiofus.software.com.itq.helper.DbStatement.Companion.selectAnswersDB
+import claudiofus.software.com.itq.helper.DbStatement.Companion.selectDateDB
+import claudiofus.software.com.itq.helper.DbStatement.Companion.selectQuestionDB
+import claudiofus.software.com.itq.helper.DbStatement.Companion.updateScoreDB
 import claudiofus.software.com.itq.model.Answer
-import claudiofus.software.com.itq.model.Answer.Companion.ANSWER_COLUMNS
 import claudiofus.software.com.itq.model.Question
-import claudiofus.software.com.itq.model.Question.Companion.QUESTION_COLUMNS
 import claudiofus.software.com.itq.model.Score
 import claudiofus.software.com.itq.utility.Strings
-import claudiofus.software.com.itq.utility.Strings.QUESTION_NUM
 import claudiofus.software.com.itq.utility.Strings.UNANSWERED_WEIGHT
 import claudiofus.software.com.itq.utility.Utils.animateFromBottom
 import claudiofus.software.com.itq.utility.Utils.animateFromTop
+import claudiofus.software.com.itq.utility.Utils.getDateMillis
 import claudiofus.software.com.itq.utility.Utils.makeInvisible
 import claudiofus.software.com.itq.utility.Utils.makeVisible
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.select
-import java.util.Random
+import java.util.*
 import kotlin.collections.HashMap
 import kotlin.collections.component1
 import kotlin.collections.component2
@@ -65,7 +65,9 @@ class QuizFragment : Fragment()
 		val answerMap = HashMap<Answer, ToggleButton?>()
 		val questionList = arrayListOf<Question>()
 		val category = if (arguments != null) arguments.getString(Strings.CATEGORY_KEY) else null
-		val score = Score()
+		val score = Score(getDateMillis(), 0)
+		val today = selectDateDB(activity)
+		if (today.isEmpty()) insertDateDB(activity)
 		mAverageText?.text = String.format("%d%%", score.weightedAv)
 
 		//TODO REMOVE COMMENT
@@ -115,37 +117,22 @@ class QuizFragment : Fragment()
 	                            answerMap : HashMap<Answer, ToggleButton?>,
 	                            answerArr : Array<ToggleButton?>, category : String?)
 	{
-		val randomInt = Random().nextInt(QUESTION_NUM).toString()
-		var resultAns = listOf<Answer>()
-		var whereCond = "(_id = ?)"
-		var whereVal = randomInt
 		scoreUpdated = false
-		if (!category.isNullOrEmpty())
-		{
-			whereCond = "(category = ?)"
-			whereVal = category.toString()
-		}
 
 		answerMap.clear()
 		questionList.clear()
-		activity.database.use {
-			questionList.addAll(
-					select(Question.TABLE_NAME).columns(*QUESTION_COLUMNS).whereSimple(whereCond,
-					                                                                   whereVal).orderBy(
-							"RANDOM()").limit(1).parseList(classParser()))
-			resultAns = select(Answer.TABLE_NAME).columns(*ANSWER_COLUMNS).whereSimple(
-					"question_id = ?", questionList.first().id.toString()).parseList(classParser())
-		}
+		questionList.addAll(selectQuestionDB(activity, category))
+		val resultAns = selectAnswersDB(activity, questionList)
 
 		var i = 0
-		do
+		while (i < resultAns.size)
 		{
 			answerArr[i]?.text = resultAns[i].text
 			answerArr[i]?.textOn = resultAns[i].text
 			answerArr[i]?.textOff = resultAns[i].text
 			answerMap.put(resultAns[i], answerArr[i])
 			i++
-		} while (i < resultAns.size)
+		}
 	}
 
 	private fun clearAnsBackground(answerArr : Array<ToggleButton?>)
@@ -194,6 +181,7 @@ class QuizFragment : Fragment()
 		{
 			score.addScore(scorePoint)
 			mAverageText?.text = String.format("%d%%", score.weightedAv)
+			updateScoreDB(activity, score)
 			scoreUpdated = true
 		}
 	}

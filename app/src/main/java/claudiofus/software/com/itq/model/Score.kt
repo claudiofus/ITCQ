@@ -1,14 +1,14 @@
 package claudiofus.software.com.itq.model
 
+import claudiofus.software.com.itq.utility.Strings.CORRECT_WEIGHT
 import claudiofus.software.com.itq.utility.Strings.UNANSWERED_WEIGHT
-import java.util.*
+import claudiofus.software.com.itq.utility.Strings.WRONG_WEIGHT
 
-class Score
+data class Score(val dateInMillis : Long, val score : Int)
 {
-	var day : Date? = null
-	private var correct = 1.0
+	private var correct = CORRECT_WEIGHT
 	private var unanswered = UNANSWERED_WEIGHT
-	private var wrong = 0.0
+	private var wrong = WRONG_WEIGHT
 	var weightedAv = 0
 	var map = mutableMapOf(correct to 0, unanswered to 0, wrong to 0)
 
@@ -29,5 +29,14 @@ class Score
 		}
 
 		return ((num / denom) * 100).toInt()
+	}
+
+	companion object
+	{
+		val TABLE_NAME = "quiz_score"
+		val COLUMN_DATE = "date"
+		val COLUMN_SCORE = "score"
+
+		val SCORE_COLUMNS = arrayOf(COLUMN_DATE, COLUMN_SCORE)
 	}
 }

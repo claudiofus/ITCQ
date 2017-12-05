@@ -15,7 +15,7 @@ import claudiofus.software.com.itq.utility.Strings.PREFS_COLOR
 import claudiofus.software.com.itq.utility.Strings.SELECTED_COLOR
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsArray
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsMap
-import claudiofus.software.com.itq.utility.Utils.writePrefs
+import claudiofus.software.com.itq.utility.Utils.writePrefsInt
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -45,7 +45,7 @@ class SettingsFragment : Fragment()
 				if (check)
 				{
 					val selected = parent.getItemAtPosition(position) as String
-					writePrefs(activity, PREFS_COLOR, colorsMap[selected]!!)
+					writePrefsInt(activity, PREFS_COLOR, colorsMap[selected]!!)
 					val intent = Intent(activity, MainActivity::class.java).putExtra(SELECTED_COLOR,
 					                                                                 position)
 					startActivity(intent)

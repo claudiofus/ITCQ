@@ -32,6 +32,12 @@ CREATE TABLE "quiz_answer" (
 )
 ;
 
+CREATE TABLE "quiz_score" (
+    "date" date NULL,
+    "score" integer
+)
+;
+
 INSERT INTO "quiz_level" VALUES(1,'Hobbyist/Professional',2,'2013-03-20 15:42:04','2013-03-20 15:42:04');
 INSERT INTO "quiz_level" VALUES(3,'Expert',3,'2013-03-20 15:58:59','2013-03-20 15:58:59');
 INSERT INTO "quiz_level" VALUES(4,'Nightmare',4,'2013-03-20 16:00:00','2013-03-20 16:00:00');

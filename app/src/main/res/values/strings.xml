@@ -25,8 +25,14 @@
     <string name="next">Next</string>
     <string name="why">Why?</string>
 
+    <!--Fragment Graphs-->
+    <string name="welcome_graphs">YOUR RESULTS</string>
+    <string name="score">Score</string>
+    <string name="no_score_av">Not enough data, train more!</string>
+
     <!--Fragment settings -->
     <string name="change_color">Change the color of the application in:</string>
+    <string name="rules">Score is calculated with weighted average: \n1 point to each correct answer; \n0.5 point to each unanswered; \n0 point to each wrong answer.</string>
 
     <!--Ads-->
     <string name="ad_unit_id1">11111111111</string>

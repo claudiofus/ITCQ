@@ -11,16 +11,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.fragments.CategoryFragment
+import claudiofus.software.com.itq.fragments.GraphsFragment
 import claudiofus.software.com.itq.fragments.QuizFragment
 import claudiofus.software.com.itq.utility.Utils
 
-
-class ImageAdapter(var mContext : Context) : BaseAdapter()
+class ImageAdapter(private var mContext : Context) : BaseAdapter()
 {
-	val itemsId : Array<String> = arrayOf(mContext.getString(R.string.quiz),
-	                                      mContext.getString(R.string.category),
-	                                      mContext.getString(R.string.graphs),
-	                                      mContext.getString(R.string.share))
+	private val itemsId : Array<String> = arrayOf(mContext.getString(R.string.quiz),
+	                                              mContext.getString(R.string.category),
+	                                              mContext.getString(R.string.graphs),
+	                                              mContext.getString(R.string.share))
 
 	override fun getView(position : Int, convertView : View?, parent : ViewGroup?) : View
 	{
@@ -44,24 +44,15 @@ class ImageAdapter(var mContext : Context) : BaseAdapter()
 			// set image based on selected text
 			val imageView = gridView.findViewById<ImageView>(R.id.grid_item_image)
 
-			if (currItem == itemsId.get(0))
+			when (currItem)
 			{
-				imageView.setImageResource(R.drawable.ic_help)
-			}
-			else if (currItem == itemsId.get(1))
-			{
-				imageView.setImageResource(R.drawable.ic_action_database)
-			}
-			else if (currItem == itemsId.get(2))
-			{
-				imageView.setImageResource(R.drawable.ic_action_bargraph)
-			}
-			else if (currItem == itemsId.get(3))
-			{
-				imageView.setImageResource(R.drawable.ic_share)
+				itemsId[0] -> imageView.setImageResource(R.drawable.ic_help)
+				itemsId[1] -> imageView.setImageResource(R.drawable.ic_action_database)
+				itemsId[2] -> imageView.setImageResource(R.drawable.ic_action_bargraph)
+				itemsId[3] -> imageView.setImageResource(R.drawable.ic_share)
 			}
 
-			imageView.setOnClickListener({ openFragment(currItem) })
+			gridView.setOnClickListener({ openFragment(currItem)})
 		}
 
 		return gridView
@@ -84,16 +75,18 @@ class ImageAdapter(var mContext : Context) : BaseAdapter()
 
 	private fun openFragment(currItem : String)
 	{
-		val fragment : Fragment
-		val activity = mContext as FragmentActivity
-		if (currItem == itemsId.get(0)) fragment = QuizFragment()
-		else if (currItem == itemsId.get(1)) fragment = CategoryFragment()
-		else if (currItem == itemsId.get(2)) fragment = QuizFragment()
-		else
+		val fragment : Fragment = when (currItem)
 		{
-			Utils.shareApp(mContext)
-			return
+			itemsId[0] -> QuizFragment()
+			itemsId[1] -> CategoryFragment()
+			itemsId[2] -> GraphsFragment()
+			else       ->
+			{
+				Utils.shareApp(mContext)
+				return
+			}
 		}
+		val activity = mContext as FragmentActivity
 		activity.supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
 	}
 }

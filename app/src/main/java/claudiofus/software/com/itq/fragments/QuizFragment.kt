@@ -2,7 +2,7 @@ package claudiofus.software.com.itq.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.getColor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,12 +25,13 @@ import claudiofus.software.com.itq.utility.Utils.animateFromTop
 import claudiofus.software.com.itq.utility.Utils.getDateMillis
 import claudiofus.software.com.itq.utility.Utils.makeInvisible
 import claudiofus.software.com.itq.utility.Utils.makeVisible
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.collections.component1
 import kotlin.collections.component2
-
 
 class QuizFragment : Fragment()
 {
@@ -44,6 +45,7 @@ class QuizFragment : Fragment()
 	private var mWhyButton : Button? = null
 	private var mWhyText : TextView? = null
 	private var mAverageText : TextView? = null
+	private var mAdView : AdView? = null
 	private var scoreUpdated = false
 
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
@@ -61,18 +63,25 @@ class QuizFragment : Fragment()
 		mWhyButton = view?.findViewById(R.id.explanationButton)
 		mWhyText = view?.findViewById(R.id.whyText)
 		mAverageText = view?.findViewById(R.id.averageText)
+		mAdView = view?.findViewById(R.id.adViewQuiz)
 		val answerArr = arrayOf(mAnswerToggle1, mAnswerToggle2, mAnswerToggle3, mAnswerToggle4)
 		val answerMap = HashMap<Answer, ToggleButton?>()
 		val questionList = arrayListOf<Question>()
 		val category = if (arguments != null) arguments.getString(Strings.CATEGORY_KEY) else null
-		val score = Score(getDateMillis(), 0)
 		val today = selectDateDB(activity)
-		if (today.isEmpty()) insertDateDB(activity)
-		mAverageText?.text = String.format("%d%%", score.weightedAv)
 
-		//TODO REMOVE COMMENT
-		//		val mAdView = view?.findViewById<AdView>(R.id.adView)
-		//		mAdView?.loadAd(AdRequest.Builder().build())
+		val score = if (today.isEmpty())
+		{
+			insertDateDB(activity)
+			Score(getDateMillis(), 0, 0, 0, 0)
+		}
+		else
+		{
+			Score(getDateMillis(), today.first().weightedAv, today.first().correct,
+			      today.first().unanswered, today.first().wrong)
+		}
+
+		mAverageText?.text = String.format("%d%%", score.weightedAv)
 
 		for (toggleBtn in answerArr) animateFromTop(toggleBtn, context)
 		makeInvisible(mWhyButton)
@@ -82,19 +91,18 @@ class QuizFragment : Fragment()
 
 		for (toggleBtn in answerMap.values)
 		{
-			toggleBtn?.setOnClickListener(View.OnClickListener {
+			toggleBtn?.setOnClickListener({
 				clearAnsBackground(answerArr)
 				toggleBtn.isChecked = true
-				toggleBtn.setBackgroundColor(
-						ContextCompat.getColor(context, R.color.secondaryLightColor))
+				toggleBtn.setBackgroundColor(getColor(context, R.color.secondaryLightColor))
 			})
 		}
 
-		mVerifyButton?.setOnClickListener(View.OnClickListener {
+		mVerifyButton?.setOnClickListener({
 			if (isChecked(answerMap)) updateScore(answerMap, score, true)
 		})
 
-		mNextButton?.setOnClickListener(View.OnClickListener {
+		mNextButton?.setOnClickListener({
 			updateScore(answerMap, score, false)
 			clearAnsBackground(answerArr)
 			makeInvisible(mWhyButton, mWhyText)
@@ -103,12 +111,14 @@ class QuizFragment : Fragment()
 			mQuestionText?.text = questionList.first().text
 		})
 
-		mWhyButton?.setOnClickListener(View.OnClickListener {
+		mWhyButton?.setOnClickListener({
 			makeVisible(mWhyText)
 			mWhyText?.text = questionList.first().explanation
 			animateFromBottom(mWhyText, context)
 			makeInvisible(mWhyButton)
 		})
+
+		mAdView?.loadAd(AdRequest.Builder().build())
 
 		return view
 	}
@@ -140,7 +150,7 @@ class QuizFragment : Fragment()
 		for (toggleBtn in answerArr)
 		{
 			toggleBtn?.isChecked = false
-			toggleBtn?.setBackgroundColor((ContextCompat.getColor(context, R.color.white)))
+			toggleBtn?.setBackgroundColor((getColor(context, R.color.white)))
 		}
 	}
 
@@ -152,11 +162,11 @@ class QuizFragment : Fragment()
 			{
 				if (answer.is_correct == 1)
 				{
-					toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.green))
+					toggleBtn.setBackgroundColor(getColor(context, R.color.green))
 				}
 				else
 				{
-					toggleBtn.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
+					toggleBtn.setBackgroundColor(getColor(context, R.color.red))
 					if (mWhyButton?.visibility == View.VISIBLE || mWhyText?.visibility == View.INVISIBLE)
 					{
 						makeVisible(mWhyButton)

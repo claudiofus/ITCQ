@@ -34,7 +34,10 @@ CREATE TABLE "quiz_answer" (
 
 CREATE TABLE "quiz_score" (
     "date" date NULL,
-    "score" integer
+    "score" integer,
+    "correct" integer,
+    "unanswered" integer,
+    "wrong" integer
 )
 ;
 

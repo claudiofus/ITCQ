@@ -45,7 +45,8 @@ class DbStatement
 		{
 			activity.database.use {
 				insert(Score.TABLE_NAME, Score.COLUMN_DATE to getDateMillis().toString(),
-				       Score.COLUMN_SCORE to 0)
+				       Score.COLUMN_SCORE to 0, Score.COLUMN_CORRECT to 0,
+				       Score.COLUMN_UNANSWERED to 0, Score.COLUMN_WRONG to 0)
 			}
 		}
 
@@ -87,8 +88,10 @@ class DbStatement
 		{
 			activity.database.use {
 				val formatted = getDateMillis().toString()
-				update(Score.TABLE_NAME, Score.COLUMN_SCORE to score.weightedAv).whereSimple(
-						"date = ?", formatted).exec()
+				update(Score.TABLE_NAME, Score.COLUMN_SCORE to score.weightedAv,
+				       Score.COLUMN_CORRECT to score.correct,
+				       Score.COLUMN_UNANSWERED to score.unanswered,
+				       Score.COLUMN_WRONG to score.wrong).whereSimple("date = ?", formatted).exec()
 			}
 		}
 

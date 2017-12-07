@@ -12,17 +12,21 @@ import claudiofus.software.com.itq.adapters.DataItem
 import claudiofus.software.com.itq.helper.DbStatement.Companion.selectCategoriesDB
 import claudiofus.software.com.itq.utility.Strings
 import claudiofus.software.com.itq.utility.Utils.startFragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class CategoryFragment : Fragment()
 {
 	private var categoryList : ListView? = null
+	private var mAdView : AdView? = null
 
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
 		activity.nav_view.menu.findItem(R.id.nav_category).isChecked = true
 		val view = inflater?.inflate(R.layout.fragment_category, container, false)
+		mAdView = view?.findViewById(R.id.adViewCategory)
 		categoryList = view?.findViewById(R.id.categoryList)
 		val categories = selectCategoriesDB(activity)
 		val args = Bundle()
@@ -37,9 +41,8 @@ class CategoryFragment : Fragment()
 			startFragment(activity, fragment)
 		}
 
-		//TODO REMOVE COMMENT
-		//val mAdView = view?.findViewById<AdView>(R.id.adView)
-		//mAdView?.loadAd(AdRequest.Builder().build())
+		mAdView?.loadAd(AdRequest.Builder().build())
+
 		return view
 	}
 }

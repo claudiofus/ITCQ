@@ -9,18 +9,13 @@
     <FrameLayout
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginEnd="16dp">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="60dp"
-            android:layout_height="60dp"/>
-
-        <ImageView
-            android:id="@+id/check_icon"
-            android:layout_width="60dp"
             android:layout_height="60dp"
-            android:visibility="gone"/>
+            android:contentDescription="@string/category"/>
     </FrameLayout>
 
     <TextView
@@ -28,6 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:textSize="18sp"/>
 
 </LinearLayout>

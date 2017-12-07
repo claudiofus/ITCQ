@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">ITCQ</string>
+    <string name="app_name">ITCQ - IT and Computer Quiz</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--Menu-->
-    <string name="description">IT and Computer quiz</string>
     <string name="share_app">Sharing</string>
     <string name="share_via">Share via</string>
     <string name="play_store">Download the app from the Play Store!</string>
@@ -16,7 +15,7 @@
     <string name="quiz">Quiz</string>
     <string name="category">Category</string>
     <string name="graphs">Graphs</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Settings &amp; Help</string>
     <string name="share">Share</string>
     <string name="back_button">Press again to exit</string>
 
@@ -28,13 +27,17 @@
     <!--Fragment Graphs-->
     <string name="welcome_graphs">YOUR RESULTS</string>
     <string name="score">Score</string>
-    <string name="no_score_av">Not enough data, train more!</string>
+    <string name="no_score_av">Not enough data, train more in next days!</string>
 
     <!--Fragment settings -->
     <string name="change_color">Change the color of the application in:</string>
-    <string name="rules">Score is calculated with weighted average: \n1 point to each correct answer; \n0.5 point to each unanswered; \n0 point to each wrong answer.</string>
+    <string name="rules">Score is calculated with weighted average: \n&#8226; 1 point to each correct answer\n&#8226; 0.5 point to each unanswered question\n&#8226; 0 point to each wrong answer</string>
+    <string name="quizRules">The quiz is endless so you can think about the answer or you can cheat (not recommended)!</string>
 
     <!--Ads-->
-    <string name="ad_unit_id1">11111111111</string>
-    <string name="ad_unit_id2">22222222222</string>
+    <string name="ad_unit_home">ca-app-pub-3334078095194784/7287301655</string>
+    <string name="ad_unit_quiz">ca-app-pub-3334078095194784/2561588580</string>
+    <string name="ad_unit_category">ca-app-pub-3334078095194784/2170706345</string>
+    <string name="ad_unit_graphs">ca-app-pub-3334078095194784/8879584925</string>
+    <string name="ad_unit_settings">ca-app-pub-3334078095194784/7566503253</string>
 </resources>

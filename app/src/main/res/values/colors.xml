@@ -2,29 +2,30 @@
 <resources>
     <!--ORANGE A400, A200, A700-->
     <color name="primaryColor">#FF9100</color>
-    <color name="primaryLightColor">#FFAB40</color>
+    <!--<color name="primaryLightColor">#FFAB40</color>-->
     <color name="primaryDarkColor">#FF6D00</color>
 
-    <color name="secondaryColor">#8d6e63</color>
+    <!--<color name="secondaryColor">#8d6e63</color>-->
     <color name="secondaryLightColor">#be9c91</color>
-    <color name="secondaryDarkColor">#5f4339</color>
+    <!--<color name="secondaryDarkColor">#5f4339</color>-->
 
     <!--BLUE A400, A200, A700-->
     <color name="primaryColorBlue">#2979FF</color>
-    <color name="primaryLightColorBlue">#448AFF</color>
+    <!--<color name="primaryLightColorBlue">#448AFF</color>-->
     <color name="primaryDarkColorBlue">#2962FF</color>
 
     <!--PURPLE A400, A200, A700-->
     <color name="primaryColorPurple">#D500F9</color>
-    <color name="primaryLightColorPurple">#E040FB</color>
+    <!--<color name="primaryLightColorPurple">#E040FB</color>-->
     <color name="primaryDarkColorPurple">#AA00FF</color>
 
-    GREENLIME A400, A200, A700-->
+    <!--GREEN A400, A200, A700-->
     <color name="primaryColorGreen">#00E676</color>
-    <color name="primaryLightColorGreen">#69F0AE</color>
+    <!--<color name="primaryLightColorGreen">#69F0AE</color>-->
     <color name="primaryDarkColorGreen">#00C853</color>
 
     <color name="green">#388e3c</color>
     <color name="red">#e53935</color>
     <color name="white">#fff</color>
+    <color name="darkestColor">#263238</color>
 </resources>

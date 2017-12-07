@@ -16,12 +16,15 @@ import claudiofus.software.com.itq.utility.Strings.SELECTED_COLOR
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsArray
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsMap
 import claudiofus.software.com.itq.utility.Utils.writePrefsInt
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class SettingsFragment : Fragment()
 {
 	private var colorSpinner : Spinner? = null
+	private var mAdView : AdView? = null
 
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
@@ -29,6 +32,7 @@ class SettingsFragment : Fragment()
 		activity.nav_view.menu.findItem(R.id.nav_settings).isChecked = true
 		var check = false
 		val view = inflater?.inflate(R.layout.fragment_settings, container, false)
+		mAdView = view?.findViewById(R.id.adViewSettings)
 		val adapter = ArrayAdapter<String>(view?.context, R.layout.spinner_item,
 		                                   colorsArray)
 
@@ -58,6 +62,8 @@ class SettingsFragment : Fragment()
 			{
 			}
 		}
+
+		mAdView?.loadAd(AdRequest.Builder().build())
 
 		return view
 	}

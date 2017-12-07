@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
 import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 	/**
 	 * Flag used to close current Fragment.
 	 */
-	private var TO_CLOSE = false
+	private var _toClose = false
 
 
 	override fun onCreate(savedInstanceState : Bundle?)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
+		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
 		val toolbar = findViewById<Toolbar>(R.id.toolbar)
 		val mDrawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -91,15 +93,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 	 */
 	override fun onBackPressed()
 	{
-		if (TO_CLOSE)
+		if (_toClose)
 		{
 			finish() // finish activity
 		}
 		else
 		{
 			Toast.makeText(this, getString(R.string.back_button), Toast.LENGTH_SHORT).show()
-			TO_CLOSE = true
-			Handler().postDelayed({ TO_CLOSE = false }, 3 * 1000 /* 3 seconds */)
+			_toClose = true
+			Handler().postDelayed({ _toClose = false }, 2 * 1000 /* 2 seconds */)
 		}
 
 		if (supportFragmentManager.backStackEntryCount == 0)

@@ -2,6 +2,8 @@ package claudiofus.software.com.itq.utility
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.view.View
@@ -110,5 +112,10 @@ object Utils
 		a.set(Calendar.SECOND, 0)
 		a.set(Calendar.MILLISECOND, 0)
 		return a.timeInMillis
+	}
+
+	fun changeDrawableColor(drawable : Drawable, color : Int) : Drawable {
+		drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+		return drawable
 	}
 }

@@ -1,4 +1,7 @@
 <resources>
+    <declare-styleable name="AppTheme">
+        <attr name="fillColor" format="color" />
+    </declare-styleable>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,6 +11,7 @@
         <item name="elevation">0dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fillColor">@color/primaryColor</item>
     </style>
 
     <!--Blue Theme-->
@@ -19,6 +23,7 @@
         <item name="elevation">0dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fillColor">@color/primaryColorBlue</item>
     </style>
 
     <!--Purple Theme-->
@@ -29,6 +34,7 @@
         <item name="elevation">0dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fillColor">@color/primaryColorPurple</item>
     </style>
 
     <!--Green Theme-->
@@ -40,6 +46,7 @@
         <item name="elevation">0dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="fillColor">@color/primaryColorGreen</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">

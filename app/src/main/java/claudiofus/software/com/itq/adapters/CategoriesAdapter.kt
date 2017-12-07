@@ -4,7 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
-import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.getColor
+import android.support.v4.content.ContextCompat.getDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.utility.TextDrawable
+import claudiofus.software.com.itq.utility.Utils.changeDrawableColor
 
 class CategoriesAdapter(private val activity : Activity, categories : List<String>) : BaseAdapter()
 {
@@ -95,31 +97,35 @@ class DataSource(categories : List<String>, val context : Context)
 
 	private fun drawableForLabel(category : String) : Drawable
 	{
+		var drawable : Drawable? = null
+		val color = getColor(context, R.color.darkestColor)
 		when (category)
 		{
-			"network"          -> return ContextCompat.getDrawable(context, R.drawable.ic_network)
-			"os"               -> return ContextCompat.getDrawable(context, R.drawable.ic_settings)
-			"data-structures"  -> return ContextCompat.getDrawable(context,	R.drawable.ic_data_structure)
-			"server-software"  -> return ContextCompat.getDrawable(context, R.drawable.ic_server)
-			"hardware"         -> return ContextCompat.getDrawable(context, R.drawable.ic_hardware)
-			"tools"            -> return ContextCompat.getDrawable(context, R.drawable.ic_tools)
-			"security"         -> return ContextCompat.getDrawable(context, R.drawable.ic_security)
-			"programming"      -> return ContextCompat.getDrawable(context, R.drawable.ic_programming)
-			"history"          -> return ContextCompat.getDrawable(context, R.drawable.ic_history)
-			"virtualization"   -> return ContextCompat.getDrawable(context, R.drawable.ic_virtualization)
-			"version-control"  -> return ContextCompat.getDrawable(context, R.drawable.ic_merge)
-			"build-automation" -> return ContextCompat.getDrawable(context, R.drawable.ic_tools)
-			"windows"          -> return ContextCompat.getDrawable(context, R.drawable.ic_windows)
-			"linux"            -> return ContextCompat.getDrawable(context, R.drawable.ic_linux)
+			"network"          -> drawable = getDrawable(context, R.drawable.ic_network)
+			"os"               -> drawable = getDrawable(context, R.drawable.ic_settings)
+			"data-structures"  -> drawable = getDrawable(context, R.drawable.ic_data_structure)
+			"server-software"  -> drawable = getDrawable(context, R.drawable.ic_server)
+			"hardware"         -> drawable = getDrawable(context, R.drawable.ic_hardware)
+			"tools"            -> drawable = getDrawable(context, R.drawable.ic_tools)
+			"security"         -> drawable = getDrawable(context, R.drawable.ic_security)
+			"programming"      -> drawable = getDrawable(context, R.drawable.ic_programming)
+			"history"          -> drawable = getDrawable(context, R.drawable.ic_history)
+			"virtualization"   -> drawable = getDrawable(context, R.drawable.ic_virtualization)
+			"version-control"  -> drawable = getDrawable(context, R.drawable.ic_merge)
+			"build-automation" -> drawable = getDrawable(context, R.drawable.ic_tools)
+			"windows"          -> drawable = getDrawable(context, R.drawable.ic_windows)
+			"linux"            -> drawable = getDrawable(context, R.drawable.ic_linux)
 		}
-		return mProvider.getRound(category[0].toUpperCase().toString())
-	}
-}
 
-class DrawableProvider
-{
-	fun getRound(text : String) : TextDrawable
+		return if (drawable != null) changeDrawableColor(drawable, color)
+		else mProvider.getRound(category[0].toUpperCase().toString())
+	}
+
+	class DrawableProvider
 	{
-		return TextDrawable.builder().buildRound(text, R.color.red)
+		fun getRound(text : String) : TextDrawable
+		{
+			return TextDrawable.builder().buildRound(text, R.color.red)
+		}
 	}
 }

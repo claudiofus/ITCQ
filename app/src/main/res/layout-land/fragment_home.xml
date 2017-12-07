@@ -19,7 +19,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/adView"
+        android:layout_above="@id/adViewHome"
+        android:layout_marginBottom="@dimen/button_margin4"
         android:layout_marginEnd="@dimen/button_margin16"
         android:layout_marginStart="@dimen/button_margin16"
         android:layout_toStartOf="@id/separator"
@@ -32,7 +33,8 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/adView"
+        android:layout_above="@id/adViewHome"
+        android:layout_marginBottom="@dimen/button_margin4"
         android:layout_marginEnd="@dimen/button_margin16"
         android:layout_toEndOf="@id/separator"
         android:background="@drawable/border_radius"
@@ -40,11 +42,11 @@
         android:numColumns="2"/>
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+        android:id="@+id/adViewHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/ad_unit_id1"/>
+        ads:adUnitId="@string/ad_unit_home"/>
 </RelativeLayout>

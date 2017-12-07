@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.adapters.ImageAdapter
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,11 +24,9 @@ class HomeFragment : Fragment()
 		activity.nav_view.menu.findItem(R.id.nav_home).isChecked = true
 		val view = inflater?.inflate(R.layout.fragment_home, container, false)
 		mGridView = view?.findViewById(R.id.gridview)
+		mAdView = view?.findViewById(R.id.adViewHome)
 		mGridView?.adapter = ImageAdapter(this.context)
-		mAdView = view?.findViewById(R.id.adView)
-
-		//TODO REMOVE COMMENT
-		//mAdView?.loadAd(AdRequest.Builder().build())
+		mAdView?.loadAd(AdRequest.Builder().build())
 
 		return view
 	}

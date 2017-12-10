@@ -14,7 +14,6 @@ import claudiofus.software.com.itq.R
 import java.text.DateFormat
 import java.util.*
 
-
 object Utils
 {
 
@@ -97,7 +96,6 @@ object Utils
 		val formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())
 		val calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault())
 		calendar.timeInMillis = millis.toLong()
-		calendar.add(Calendar.DAY_OF_YEAR, 1)
 		return formatter.format(calendar.time)
 	}
 

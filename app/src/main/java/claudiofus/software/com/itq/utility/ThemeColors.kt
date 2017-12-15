@@ -1,15 +1,16 @@
 package claudiofus.software.com.itq.utility
 
 import claudiofus.software.com.itq.R
+import java.util.*
 
 class ThemeColors
 {
 	companion object
 	{
-		private const val ORANGE = "orange"
-		private const val BLUE   = "blue"
-		private const val PURPLE = "purple"
-		private const val GREEN  = "green"
+		private val ORANGE = if (Locale.getDefault().language == Locale.ITALIAN.language) "arancio" else "orange"
+		private val BLUE   = if (Locale.getDefault().language == Locale.ITALIAN.language) "blu" else "blue"
+		private val PURPLE = if (Locale.getDefault().language == Locale.ITALIAN.language) "viola" else "purple"
+		private val GREEN  = if (Locale.getDefault().language == Locale.ITALIAN.language) "verde" else "green"
 
 		val colorsArray = arrayOf(ORANGE, BLUE, PURPLE, GREEN)
 		val colorsMap = hashMapOf(ORANGE to R.style.AppTheme,
@@ -21,5 +22,6 @@ class ThemeColors
 		                                BLUE to R.color.primaryDarkColorBlue,
 		                                PURPLE to R.color.primaryDarkColorPurple,
 		                                GREEN to R.color.primaryDarkColorGreen)
+
 	}
 }

@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat.getColor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import claudiofus.software.com.itq.R
 import claudiofus.software.com.itq.helper.DbStatement.Companion.selectScoresDB
 import claudiofus.software.com.itq.utility.Utils.millisToString
@@ -24,8 +25,14 @@ import java.util.*
 
 class GraphsFragment : Fragment()
 {
+	private var mCorrect : TextView? = null
+	private var mUnans : TextView? = null
+	private var mWrong : TextView? = null
 	private var mChart : LineChart? = null
 	private var mAdView : AdView? = null
+	private var correct = 0
+	private var unanswered = 0
+	private var wrong = 0
 	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
@@ -35,8 +42,21 @@ class GraphsFragment : Fragment()
 		val fancyTime = arrayListOf<String>()
 		val scoresList = selectScoresDB(activity)
 
+		for(score in scoresList) {
+			correct += score.correct
+			unanswered += score.unanswered
+			wrong += score.wrong
+		}
+
+		mCorrect = view?.findViewById(R.id.correct)
+		mUnans = view?.findViewById(R.id.unanswered)
+		mWrong = view?.findViewById(R.id.wrong)
 		mAdView = view?.findViewById(R.id.adViewGraphs)
 		mChart = view?.findViewById(R.id.mChart)
+
+		mCorrect?.text = correct.toString()
+		mUnans?.text = unanswered.toString()
+		mWrong?.text = wrong.toString()
 		mChart?.axisLeft?.setDrawAxisLine(false)
 		mChart?.axisRight?.isEnabled = false
 		mChart?.axisRight?.setDrawAxisLine(false)

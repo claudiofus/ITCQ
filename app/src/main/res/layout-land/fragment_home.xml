@@ -25,6 +25,7 @@
         android:layout_marginStart="@dimen/button_margin16"
         android:layout_toStartOf="@id/separator"
         android:background="@drawable/border_radius"
+        android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/welcome"
         android:textSize="30sp"/>

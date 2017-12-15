@@ -32,7 +32,7 @@ class CategoryFragment : Fragment()
 		val args = Bundle()
 
 		categoryList?.adapter = CategoriesAdapter(activity, categories)
-		categoryList?.setOnItemClickListener { parent, view, position, id ->
+		categoryList?.setOnItemClickListener { parent, view, position, _ ->
 			val dataItem = parent.getItemAtPosition(position) as DataItem
 			val category = dataItem.label
 			args.putString(Strings.CATEGORY_KEY, category)

@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">ITCQ</string>
+    <string name="app_descr">ITCQ - IT e Computer Quiz</string>
+    <string name="navigation_drawer_open">Apri drawer</string>
+    <string name="navigation_drawer_close">Chiudi drawer</string>
+
+    <!--Menu-->
+    <string name="share_app">Condivisione</string>
+    <string name="share_via">Condividi tramite</string>
+    <string name="play_store">Scarica questa app dal Play Store!</string>
+    <string name="play_store_link">https://play.google.com/store/apps</string>
+
+    <!--Fragment home-->
+    <string name="welcome">Benvenuto in ITCQ \n IT e Computer Quiz</string>
+    <string name="home">Home</string>
+    <string name="quiz">Quiz</string>
+    <string name="category">Categorie</string>
+    <string name="graphs">Statistiche</string>
+    <string name="settings">Impostazioni &amp; Aiuto</string>
+    <string name="share">Condividi</string>
+    <string name="back_button">Premi di nuovo per uscire</string>
+
+    <!--Fragment quiz-->
+    <string name="verify">Verifica</string>
+    <string name="next">Avanti</string>
+    <string name="why">Perché?</string>
+
+    <!--Fragment Graphs-->
+    <string name="welcome_graphs">I TUOI RISULTATI</string>
+    <string name="correctText">CORRETTE</string>
+    <string name="unansText">SENZA RISPOSTA</string>
+    <string name="wrongText">SBAGLIATE</string>
+    <string name="score">Punteggio</string>
+    <string name="no_score_av">Non ci sono abbastanza dati, allenati di più nei prossimi giorni!</string>
+
+    <!--Fragment settings -->
+    <string name="change_color">Cambia il colore dell\'applicazione in:</string>
+    <string name="rules">Il punteggio è calcolato con la media pesata: \n&#8226; 1 punto per ogni risposta corretta\n&#8226; 0.5 punti per ogni domanda senza risposta\n&#8226; 0 punti per ogni risposta sbagliata</string>
+    <string name="quizRules">Il gioco è senza fine e senza limiti di tempo così puoi ragionare sulla risposta oppure imbrogliare (non raccomandato)!</string>
+
+    <!--Ads-->
+    <string name="ad_unit_home">ca-app-pub-3334078095194784/7287301655</string>
+    <string name="ad_unit_quiz">ca-app-pub-3334078095194784/2561588580</string>
+    <string name="ad_unit_category">ca-app-pub-3334078095194784/2170706345</string>
+    <string name="ad_unit_graphs">ca-app-pub-3334078095194784/8879584925</string>
+    <string name="ad_unit_settings">ca-app-pub-3334078095194784/7566503253</string>
+</resources>

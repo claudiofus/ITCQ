@@ -1,14 +1,15 @@
 package claudiofus.software.com.itq.utility
 
+import java.util.*
+
 object Strings
 {
 	val TEXT_TYPE = "text/plain"
-	val SQL_FILENAME = "db.sql"
+	val SQL_FILENAME = if (Locale.getDefault().language == Locale.ITALIAN.language) "db_ita.sql" else "db.sql"
 	val DB_NAME = "DB_ITQ"
 	val DB_VERSION = 1
 	val QUESTION_NUM = 504
 	val CATEGORY_KEY = "category"
-	val SELECTED_COLOR = "selected_color"
 
 	// Answers weights
 	val CORRECT_WEIGHT = 1.0

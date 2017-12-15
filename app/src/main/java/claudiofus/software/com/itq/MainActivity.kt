@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 	 */
 	private var _toClose = false
 
-
 	override fun onCreate(savedInstanceState : Bundle?)
 	{
 		val theme = readPrefsInt(this, PREFS_COLOR)

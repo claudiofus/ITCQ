@@ -8,7 +8,7 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".fragments.GraphsFragment">
+                tools:context=".fragment.GraphsFragment">
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/mChart"

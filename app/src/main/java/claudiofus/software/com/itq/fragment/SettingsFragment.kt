@@ -1,4 +1,4 @@
-package claudiofus.software.com.itq.fragments
+package claudiofus.software.com.itq.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import claudiofus.software.com.itq.MainActivity
 import claudiofus.software.com.itq.R
+import claudiofus.software.com.itq.activity.SettingsActivity
 import claudiofus.software.com.itq.utility.Strings.PREFS_COLOR
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsArray
 import claudiofus.software.com.itq.utility.ThemeColors.Companion.colorsMap
@@ -26,12 +26,12 @@ class SettingsFragment : Fragment()
 	private var colorSpinner : Spinner? = null
 	private var mAdView : AdView? = null
 
-	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
+	override fun onCreateView(inflater : LayoutInflater, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
-		activity.nav_view.menu.findItem(R.id.nav_settings).isChecked = true
+		activity?.nav_view?.menu?.findItem(R.id.nav_settings)?.isChecked = true
 		var check = false
-		val view = inflater?.inflate(R.layout.fragment_settings, container, false)
+		val view = inflater.inflate(R.layout.fragment_settings, container, false)
 		mAdView = view?.findViewById(R.id.adViewSettings)
 		val adapter = ArrayAdapter<String>(view?.context, R.layout.spinner_item, colorsArray)
 
@@ -60,7 +60,7 @@ class SettingsFragment : Fragment()
 				{
 					val selected = parent.getItemAtPosition(position) as String
 					writePrefsInt(activity, PREFS_COLOR, colorsMap[selected]!!)
-					val intent = Intent(activity, MainActivity::class.java)
+					val intent = Intent(activity, SettingsActivity::class.java)
 					startActivity(intent)
 					check = false
 				}

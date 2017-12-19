@@ -17,6 +17,7 @@
     <string name="category">Category</string>
     <string name="graphs">Graphs</string>
     <string name="settings">Settings &amp; Help</string>
+    <string name="help">Help</string>
     <string name="share">Share</string>
     <string name="back_button">Press again to exit</string>
 
@@ -26,7 +27,6 @@
     <string name="why">Why?</string>
 
     <!--Fragment Graphs-->
-    <string name="welcome_graphs">YOUR RESULTS</string>
     <string name="correctText">CORRECT</string>
     <string name="unansText">UNANSWERED</string>
     <string name="wrongText">WRONG</string>

@@ -17,5 +17,6 @@ object Strings
 	val WRONG_WEIGHT = 0.0
 
 	// Prefs key
+	val PREFS_FILE = "app_prefs"
 	val PREFS_COLOR = "theme"
 }

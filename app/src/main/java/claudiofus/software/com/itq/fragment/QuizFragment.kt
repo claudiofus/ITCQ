@@ -1,4 +1,4 @@
-package claudiofus.software.com.itq.fragments
+package claudiofus.software.com.itq.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -48,11 +48,11 @@ class QuizFragment : Fragment()
 	private var mAdView : AdView? = null
 	private var scoreUpdated = false
 
-	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
+	override fun onCreateView(inflater : LayoutInflater, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
-		activity.nav_view.menu.findItem(R.id.nav_quiz).isChecked = true
-		val view = inflater?.inflate(R.layout.fragment_quiz, container, false)
+		activity?.nav_view?.menu?.findItem(R.id.nav_quiz)?.isChecked = true
+		val view = inflater.inflate(R.layout.fragment_quiz, container, false)
 		mQuestionText = view?.findViewById(R.id.questionText)
 		mAnswerToggle1 = view?.findViewById(R.id.answer1)
 		mAnswerToggle2 = view?.findViewById(R.id.answer2)
@@ -67,7 +67,7 @@ class QuizFragment : Fragment()
 		val answerArr = arrayOf(mAnswerToggle1, mAnswerToggle2, mAnswerToggle3, mAnswerToggle4)
 		val answerMap = HashMap<Answer, ToggleButton?>()
 		val questionList = arrayListOf<Question>()
-		val category = if (arguments != null) arguments.getString(Strings.CATEGORY_KEY) else null
+		val category = if (arguments != null) arguments!!.getString(Strings.CATEGORY_KEY) else null
 		val today = selectDateDB(activity)
 
 		val score = if (today.isEmpty())
@@ -94,7 +94,7 @@ class QuizFragment : Fragment()
 			toggleBtn?.setOnClickListener({
 				clearAnsBackground(answerArr)
 				toggleBtn.isChecked = true
-				toggleBtn.setBackgroundColor(getColor(context, R.color.secondaryLightColor))
+				toggleBtn.setBackgroundColor(getColor(context!!, R.color.secondaryLightColor))
 			})
 		}
 
@@ -150,7 +150,7 @@ class QuizFragment : Fragment()
 		for (toggleBtn in answerArr)
 		{
 			toggleBtn?.isChecked = false
-			toggleBtn?.setBackgroundColor((getColor(context, R.color.white)))
+			toggleBtn?.setBackgroundColor((getColor(context!!, R.color.white)))
 		}
 	}
 
@@ -162,11 +162,11 @@ class QuizFragment : Fragment()
 			{
 				if (answer.is_correct == 1)
 				{
-					toggleBtn.setBackgroundColor(getColor(context, R.color.green))
+					toggleBtn.setBackgroundColor(getColor(context!!, R.color.green))
 				}
 				else
 				{
-					toggleBtn.setBackgroundColor(getColor(context, R.color.red))
+					toggleBtn.setBackgroundColor(getColor(context!!, R.color.red))
 					if (mWhyButton?.visibility == View.VISIBLE || mWhyText?.visibility == View.INVISIBLE)
 					{
 						makeVisible(mWhyButton)

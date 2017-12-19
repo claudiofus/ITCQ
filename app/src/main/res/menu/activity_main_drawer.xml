@@ -9,7 +9,7 @@
             android:title="@string/home" />
         <item
             android:id="@+id/nav_quiz"
-            android:icon="@drawable/ic_help"
+            android:icon="@drawable/ic_developer_mode"
             android:title="@string/quiz" />
         <item
             android:id="@+id/nav_category"
@@ -21,7 +21,7 @@
             android:title="@string/graphs" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_action_settings"
+            android:icon="@drawable/ic_help_outline"
             android:title="@string/settings" />
 
         <item android:title="@string/share_app">

@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.ToggleButton
 import claudiofus.software.com.itq.R
+import claudiofus.software.com.itq.utility.Strings.PREFS_FILE
 import java.text.DateFormat
 import java.util.*
 
@@ -32,7 +33,7 @@ object Utils
 		ctx.startActivity(Intent.createChooser(sharingIntent, ctx.getString(R.string.share_via)))
 	}
 
-	fun animateFromBottom(textView : TextView?, context : Context)
+	fun animateFromBottom(textView : TextView?, context : Context?)
 	{
 		val a = AnimationUtils.loadAnimation(context, R.anim.scale)
 		a.reset()
@@ -40,7 +41,7 @@ object Utils
 		textView?.startAnimation(a)
 	}
 
-	fun animateFromTop(toggleButton : ToggleButton?, context : Context)
+	fun animateFromTop(toggleButton : ToggleButton?, context : Context?)
 	{
 		val animation = AnimationUtils.loadAnimation(context, R.anim.scale_down)
 		animation.reset()
@@ -48,22 +49,21 @@ object Utils
 		toggleButton?.startAnimation(animation)
 	}
 
-	fun startFragment(activity : FragmentActivity, fragment : Fragment)
+	fun startFragment(activity : FragmentActivity?, fragment : Fragment)
 	{
-		activity.supportFragmentManager.beginTransaction().replace(R.id.content, fragment).commit()
+		activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.content, fragment)?.commit()
 	}
 
-	fun writePrefsInt(activity : FragmentActivity, prefs : String, value : Int)
+	fun writePrefsInt(activity : FragmentActivity?, prefs : String, value : Int)
 	{
-		val editor = activity.getPreferences(Context.MODE_PRIVATE).edit()
-		editor.putInt(prefs, value)
-		editor.apply()
+		val editor = activity?.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)?.edit()
+		editor?.putInt(prefs, value)?.apply()
 	}
 
-	fun readPrefsInt(activity : FragmentActivity, prefs : String) : Int
+	fun readPrefsInt(activity : FragmentActivity?, prefs : String) : Int
 	{
-		val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-		return sharedPref.getInt(prefs, -1)
+		val sharedPref = activity?.getSharedPreferences(PREFS_FILE, Context.MODE_PRIVATE)
+		return sharedPref!!.getInt(prefs, -1)
 	}
 
 	/**
@@ -112,7 +112,8 @@ object Utils
 		return a.timeInMillis
 	}
 
-	fun changeDrawableColor(drawable : Drawable, color : Int) : Drawable {
+	fun changeDrawableColor(drawable : Drawable, color : Int) : Drawable
+	{
 		drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 		return drawable
 	}

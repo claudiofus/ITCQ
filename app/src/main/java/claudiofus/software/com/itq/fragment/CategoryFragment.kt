@@ -1,4 +1,4 @@
-package claudiofus.software.com.itq.fragments
+package claudiofus.software.com.itq.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import claudiofus.software.com.itq.R
-import claudiofus.software.com.itq.adapters.CategoriesAdapter
-import claudiofus.software.com.itq.adapters.DataItem
+import claudiofus.software.com.itq.adapter.CategoriesAdapter
+import claudiofus.software.com.itq.adapter.DataItem
 import claudiofus.software.com.itq.helper.DbStatement.Companion.selectCategoriesDB
 import claudiofus.software.com.itq.utility.Strings
 import claudiofus.software.com.itq.utility.Utils.startFragment
@@ -21,11 +21,11 @@ class CategoryFragment : Fragment()
 	private var categoryList : ListView? = null
 	private var mAdView : AdView? = null
 
-	override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?,
+	override fun onCreateView(inflater : LayoutInflater, container : ViewGroup?,
 	                          savedInstanceState : Bundle?) : View?
 	{
-		activity.nav_view.menu.findItem(R.id.nav_category).isChecked = true
-		val view = inflater?.inflate(R.layout.fragment_category, container, false)
+		activity?.nav_view?.menu?.findItem(R.id.nav_category)?.isChecked = true
+		val view = inflater.inflate(R.layout.fragment_category, container, false)
 		mAdView = view?.findViewById(R.id.adViewCategory)
 		categoryList = view?.findViewById(R.id.categoryList)
 		val categories = selectCategoriesDB(activity)

@@ -17,6 +17,7 @@
     <string name="category">Categorie</string>
     <string name="graphs">Statistiche</string>
     <string name="settings">Impostazioni &amp; Aiuto</string>
+    <string name="help">Aiuto</string>
     <string name="share">Condividi</string>
     <string name="back_button">Premi di nuovo per uscire</string>
 
@@ -26,7 +27,6 @@
     <string name="why">Perché?</string>
 
     <!--Fragment Graphs-->
-    <string name="welcome_graphs">I TUOI RISULTATI</string>
     <string name="correctText">CORRETTE</string>
     <string name="unansText">SENZA RISPOSTA</string>
     <string name="wrongText">SBAGLIATE</string>

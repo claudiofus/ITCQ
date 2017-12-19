@@ -19,10 +19,10 @@ class DbStatement
 	companion object
 	{
 		// CategoryFragment
-		fun selectCategoriesDB(activity : FragmentActivity) : List<String>
+		fun selectCategoriesDB(activity : FragmentActivity?) : List<String>
 		{
 			var categories : List<String> = arrayListOf()
-			activity.database.use {
+			activity?.database?.use {
 				categories = select(Question.TABLE_NAME).distinct().column(
 						Question.COLUMN_CATEGORY).parseList(classParser())
 			}
@@ -30,10 +30,10 @@ class DbStatement
 		}
 
 		// QuizFragment
-		fun selectDateDB(activity : FragmentActivity) : List<Score>
+		fun selectDateDB(activity : FragmentActivity?) : List<Score>
 		{
 			var today : List<Score> = listOf()
-			activity.database.use {
+			activity?.database?.use {
 				today = select(Score.TABLE_NAME).columns(*SCORE_COLUMNS).whereSimple("date = ?",
 				                                                                     getDateMillis().toString()).parseList(
 						classParser())
@@ -41,16 +41,16 @@ class DbStatement
 			return today
 		}
 
-		fun insertDateDB(activity : FragmentActivity)
+		fun insertDateDB(activity : FragmentActivity?)
 		{
-			activity.database.use {
+			activity?.database?.use {
 				insert(Score.TABLE_NAME, Score.COLUMN_DATE to getDateMillis().toString(),
 				       Score.COLUMN_SCORE to 0, Score.COLUMN_CORRECT to 0,
 				       Score.COLUMN_UNANSWERED to 0, Score.COLUMN_WRONG to 0)
 			}
 		}
 
-		fun selectQuestionDB(activity : FragmentActivity, category : String?) : ArrayList<Question>
+		fun selectQuestionDB(activity : FragmentActivity?, category : String?) : ArrayList<Question>
 		{
 			val randomInt = Random().nextInt(Strings.QUESTION_NUM).toString()
 			var whereCond = "(_id = ?)"
@@ -61,7 +61,7 @@ class DbStatement
 				whereVal = category.toString()
 			}
 			val questionList = arrayListOf<Question>()
-			activity.database.use {
+			activity?.database?.use {
 				questionList.addAll(
 						select(Question.TABLE_NAME).columns(*Question.QUESTION_COLUMNS).whereSimple(
 								whereCond, whereVal).orderBy("RANDOM()").limit(1).parseList(
@@ -71,11 +71,11 @@ class DbStatement
 			return questionList
 		}
 
-		fun selectAnswersDB(activity : FragmentActivity,
+		fun selectAnswersDB(activity : FragmentActivity?,
 		                    questionList : ArrayList<Question>) : List<Answer>
 		{
 			var resultAns = listOf<Answer>()
-			activity.database.use {
+			activity?.database?.use {
 				resultAns = select(Answer.TABLE_NAME).columns(*ANSWER_COLUMNS).whereSimple(
 						"question_id = ?", questionList.first().id.toString()).parseList(
 						classParser())
@@ -84,9 +84,9 @@ class DbStatement
 			return resultAns
 		}
 
-		fun updateScoreDB(activity : FragmentActivity, score : Score)
+		fun updateScoreDB(activity : FragmentActivity?, score : Score)
 		{
-			activity.database.use {
+			activity?.database?.use {
 				val formatted = getDateMillis().toString()
 				update(Score.TABLE_NAME, Score.COLUMN_SCORE to score.weightedAv,
 				       Score.COLUMN_CORRECT to score.correct,
@@ -96,10 +96,10 @@ class DbStatement
 		}
 
 		// GraphsFragment
-		fun selectScoresDB(activity : FragmentActivity) : List<Score>
+		fun selectScoresDB(activity : FragmentActivity?) : List<Score>
 		{
 			var scoresList = listOf<Score>()
-			activity.database.use {
+			activity?.database?.use {
 				scoresList = select(Score.TABLE_NAME).columns(*Score.SCORE_COLUMNS).parseList(
 						classParser())
 			}

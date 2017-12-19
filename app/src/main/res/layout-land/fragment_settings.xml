@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        ads:adSize="MEDIUM_RECTANGLE"
+        ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/ad_unit_settings"/>
 
 </RelativeLayout>

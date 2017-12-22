@@ -8,7 +8,7 @@
     <string name="share_app">Sharing</string>
     <string name="share_via">Share via</string>
     <string name="play_store">Download the app from the Play Store!</string>
-    <string name="play_store_link">https://play.google.com/store/apps</string>
+    <string name="play_store_link">https://play.google.com/store/apps/details?id=com.software.claudiofus.itcq</string>
 
     <!--Fragment home-->
     <string name="welcome">Welcome in ITCQ \n IT and Computer quiz</string>
@@ -22,9 +22,9 @@
     <string name="back_button">Press again to exit</string>
 
     <!--Fragment quiz-->
-    <string name="verify">Verify</string>
     <string name="next">Next</string>
     <string name="why">Why?</string>
+    <string name="no_selected_dialog">I remind you that for each correct question 1 point is assigned, 0.5 for each unanswered question, 0 for each wrong question. \n\nAre you sure you do not want to answer?</string>
 
     <!--Fragment Graphs-->
     <string name="correctText">CORRECT</string>

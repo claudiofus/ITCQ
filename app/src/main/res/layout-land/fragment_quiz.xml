@@ -70,7 +70,7 @@
         android:id="@+id/whyText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/verifyButton"
+        android:layout_above="@+id/explanationButton"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="@dimen/button_margin4"
         android:layout_marginStart="@dimen/button_margin4"
@@ -80,19 +80,11 @@
         android:visibility="invisible"/>
 
     <Button
-        android:id="@+id/verifyButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/adViewQuiz"
-        android:layout_alignParentStart="true"
-        android:text="@string/verify"/>
-
-    <Button
         android:id="@+id/explanationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adViewQuiz"
-        android:layout_toEndOf="@+id/verifyButton"
+        android:layout_alignParentStart="true"
         android:text="@string/why"/>
 
     <TextView
@@ -109,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/adViewQuiz"
-        android:layout_alignBottom="@+id/verifyButton"
+        android:layout_alignBottom="@+id/explanationButton"
         android:layout_alignParentEnd="true"
         android:text="@string/next"/>
 

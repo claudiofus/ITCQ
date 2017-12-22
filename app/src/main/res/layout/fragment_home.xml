@@ -17,6 +17,7 @@
         android:layout_centerVertical="true"/>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/separator"
@@ -26,18 +27,91 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/welcome"
-        android:textSize="30sp"/>
+        android:textSize="@dimen/text_home"/>
 
-    <GridView
-        android:id="@+id/gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/adViewHome"
-        android:layout_below="@id/separator"
-        android:layout_margin="@dimen/button_margin16"
-        android:background="@drawable/border_radius"
-        android:gravity="center"
-        android:numColumns="2"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/adViewHome"
+                    android:layout_below="@id/separator"
+                    android:layout_margin="@dimen/button_margin16"
+                    android:background="@drawable/border_radius">
+
+        <View
+            android:id="@+id/centerVerticalShim"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"/>
+
+        <View
+            android:id="@+id/centerHorizontalShim"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/quizHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/centerVerticalShim"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/centerHorizontalShim"
+            android:background="#42A5F5"
+            android:gravity="center"
+            android:text="@string/quiz"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/categoryHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/centerVerticalShim"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/centerHorizontalShim"
+            android:background="#EF5350"
+            android:gravity="center"
+            android:text="@string/category"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/graphsHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/centerVerticalShim"
+            android:layout_toStartOf="@+id/centerHorizontalShim"
+            android:background="#66BB6A"
+            android:gravity="center"
+            android:text="@string/graphs"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/helpHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/centerVerticalShim"
+            android:layout_toEndOf="@+id/centerHorizontalShim"
+            android:background="#5C6BC0"
+            android:gravity="center"
+            android:text="@string/help"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp">
+        </TextView>
+    </RelativeLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewHome"
@@ -47,4 +121,5 @@
         android:layout_alignParentStart="true"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/ad_unit_home"/>
+
 </RelativeLayout>

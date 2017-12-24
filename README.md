@@ -1,1 +1,1 @@
-<a frameborder="0" data-theme="light" data-stack-embed="true" data-layers="2,3,4" href="https://embed.stackshare.io/stacks/embed/546066a19283024bef72ea7f218536"/></a><script async src="https://cdn1.stackshare.io/javascripts/client-code.js" charset="utf-8"></script>
+[![StackShare](https://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/claudiofus/itcq)
